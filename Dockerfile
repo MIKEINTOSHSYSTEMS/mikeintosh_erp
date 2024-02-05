@@ -11,7 +11,7 @@ COPY ./etc/odoo.conf /etc/odoo/odoo.conf
 #RUN pip3 install --no-cache-dir <your-package-list>
 
 # Set permissions for Odoo configuration file
-RUN chown odoo:odoo /etc/odoo/odoo.conf && chmod 640 /etc/odoo/odoo.conf
+RUN chown odoo:odoo /etc/odoo/odoo.conf && chmod 777 /etc/odoo/odoo.conf
 
 # Expose Odoo service
 EXPOSE 8069
