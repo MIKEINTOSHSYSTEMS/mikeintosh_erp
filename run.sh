@@ -3,9 +3,9 @@
 DESTINATION=$1
 ODOO_PORT=$2
 PGADMIN_PORT=$3
-DB_NAME="mikeintosh"
+DB_NAME="merqconsultancyhq"
 
-git clone --depth=1 https://github.com/MIKEINTOSHSYSTEMS/mikeintosh_erp.git $DESTINATION
+git clone --depth=1 https://github.com/merqconsultancyTEMS/mikeintosh_erp.git $DESTINATION
 rm -rf $DESTINATION/.git
 chmod -R 777 $DESTINATION
 
@@ -21,4 +21,4 @@ echo "DB_NAME=$DB_NAME" >> $DESTINATION/.env
 
 cd $DESTINATION && docker-compose up -d
 
-echo "Odoo started @ http://localhost:$ODOO_PORT | Default Admin User: admin@mikeintoshsys.com | Default Admin Password: mikeintoshadmin | pgAdmin started @ http://localhost:$PGADMIN_PORT"
+echo "Odoo started @ http://localhost:$ODOO_PORT | Default Admin User: admin@merqconsultancy.com | Default Admin Password: merqhqadmin | pgAdmin started @ http://localhost:$PGADMIN_PORT"

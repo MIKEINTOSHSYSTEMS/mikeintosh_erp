@@ -2,14 +2,14 @@ version: '3.8'
 
 services:
   db:
-    image: postgres:16
+    image: bitnami/postgresql:16
     restart: always
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRESQL_DATABASE: ${DB_NAME}
+      POSTGRESQL_USERNAME: ${DB_USER}
+      POSTGRESQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./postgresql:/var/lib/postgresql/data
+      - odoo-db-data:/bitnami/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -23,18 +23,18 @@ services:
       - pgadmin-data:/var/lib/pgadmin
 
   odoo:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: bitnami/odoo:17
     ports:
       - "${ODOO_HOST_PORT}:8069"
     environment:
-      - HOST=db
-      - USER=${DB_USER}
-      - PASSWORD=${DB_PASSWORD}
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT_NUMBER=5432
+      - POSTGRESQL_USERNAME=${DB_USER}
+      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
+      - POSTGRESQL_DATABASE=${DB_NAME}
     volumes:
-      - ./addons:/mnt/extra-addons
-      - ./etc:/etc/odoo
+      - ./addons:/bitnami/odoo/extra-addons
+      - ./etc:/bitnami/odoo/conf
     restart: always
 
 volumes:
