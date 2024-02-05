@@ -12,26 +12,33 @@ services:
       - odoo-db-data:/bitnami/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: bitnami/pgadmin4:latest
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
     ports:
-      - "5454:80"
+      - "${PGADMIN_PORT}:80"
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - pgadmin-data:/bitnami/pgadmin
 
   odoo:
     image: bitnami/odoo:17
     ports:
-      - "${ODOO_HOST_PORT}:8069"
+      - "${ODOO_HOST_PORT}:${ODOO_PORT_NUMBER}"
+      - "${ODOO_LONGPOLLING_PORT}:${ODOO_LONGPOLLING_PORT_NUMBER}"
     environment:
-      - POSTGRESQL_HOST=db
-      - POSTGRESQL_PORT_NUMBER=5432
-      - POSTGRESQL_USERNAME=${DB_USER}
-      - POSTGRESQL_PASSWORD=${DB_PASSWORD}
-      - POSTGRESQL_DATABASE=${DB_NAME}
+      - ODOO_DATABASE_HOST=db
+      - ODOO_DATABASE_PORT_NUMBER=${ODOO_DATABASE_PORT_NUMBER}
+      - ODOO_DATABASE_NAME=${DB_NAME}
+      - ODOO_DATABASE_USER=${DB_USER}
+      - ODOO_DATABASE_PASSWORD=${DB_PASSWORD}
+      - ODOO_DATA_TO_PERSIST=${ODOO_ADDONS_DIR} ${ODOO_CONF_DIR} ${ODOO_DATA_DIR}
+      - ODOO_SKIP_BOOTSTRAP=no
+      - ODOO_SKIP_MODULES_UPDATE=no
+      - ODOO_LOAD_DEMO_DATA=no
+      - ODOO_EMAIL=${ODOO_ADMIN_EMAIL}
+      - ODOO_PASSWORD=${ODOO_ADMIN_PASSWORD}
     volumes:
       - ./addons:/bitnami/odoo/extra-addons
       - ./etc:/bitnami/odoo/conf
