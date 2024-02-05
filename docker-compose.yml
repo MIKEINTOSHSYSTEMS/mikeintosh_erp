@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - odoo-db-data:/var/lib/postgresql/data
+      - ./postgresql:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4
@@ -33,8 +33,8 @@ services:
       - USER=${DB_USER}
       - PASSWORD=${DB_PASSWORD}
     volumes:
-      - odoo-addons:/mnt/extra-addons
-      - odoo-config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+      - ./etc:/etc/odoo
     restart: always
 
 volumes:
