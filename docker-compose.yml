@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+      - "5454:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  odoo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${ODOO_HOST_PORT}:8069"
+    environment:
+      - HOST=db
+      - USER=${DB_USER}
+      - PASSWORD=${DB_PASSWORD}
+    volumes:
+      - odoo-addons:/mnt/extra-addons
+      - odoo-config:/etc/odoo
+    restart: always
+
+volumes:
+  odoo-db-data:
+  pgadmin-data:
+  odoo-addons:
+  odoo-config:
