@@ -41,7 +41,7 @@ services:
       - ODOO_PASSWORD=${ODOO_ADMIN_PASSWORD}
     volumes:
       - ./addons:/bitnami/odoo/extra-addons
-      - ./etc:/bitnami/odoo/conf
+      - ./etc:/opt/bitnami/odoo/conf
     restart: always
 
 volumes:
