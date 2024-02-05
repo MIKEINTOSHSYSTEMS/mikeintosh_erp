@@ -12,7 +12,7 @@ services:
       - odoo-db-data:/bitnami/postgresql/data
 
   pgadmin:
-    image: bitnami/pgadmin4:latest
+    image: dpage/pgadmin4:latest
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
