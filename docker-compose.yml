@@ -1,51 +1,35 @@
-version: '3.8'
-
+version: '2'
 services:
   db:
-    image: bitnami/postgresql:16
-    restart: always
+    image: postgres:16
+    user: root
     environment:
-      POSTGRESQL_DATABASE: ${DB_NAME}
-      POSTGRESQL_USERNAME: ${DB_USER}
-      POSTGRESQL_PASSWORD: ${DB_PASSWORD}
+      - POSTGRES_USER=merqconsultancy
+      - POSTGRES_PASSWORD=merqhqadmin
+      - POSTGRES_DB=postgres
+    restart: always             # run as a service
     volumes:
-      - odoo-db-data:/bitnami/postgresql/data
+        - ./postgresql:/var/lib/postgresql/data
 
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_USER}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+  odoo17:
+    image: odoo:17
+    user: root
+    depends_on:
+      - db
     ports:
-      - "${PGADMIN_PORT}:80"
-    volumes:
-      - pgadmin-data:/bitnami/pgadmin
-
-  odoo:
-    image: bitnami/odoo:17
-    ports:
-      - "${ODOO_HOST_PORT}:8079"
-      - "${ODOO_LONGPOLLING_PORT}:8072"
+      - "10017:8069"
+      - "20017:8072" # live chat
+    tty: true
+    command: --
     environment:
-      - ODOO_DATABASE_HOST=db
-      - ODOO_DATABASE_PORT_NUMBER=5432
-      - ODOO_DATABASE_NAME=${DB_NAME}
-      - ODOO_DATABASE_USER=${DB_USER}
-      - ODOO_DATABASE_PASSWORD=${DB_PASSWORD}
-      - ODOO_DATA_TO_PERSIST=./addons ./etc ./data
-      - ODOO_SKIP_BOOTSTRAP=no
-      - ODOO_SKIP_MODULES_UPDATE=no
-      - ODOO_LOAD_DEMO_DATA=no
-      - ODOO_EMAIL=${ODOO_ADMIN_EMAIL}
-      - ODOO_PASSWORD=${ODOO_ADMIN_PASSWORD}
+      - HOST=db
+      - USER=merqconsultancy
+      - PASSWORD=merqhqadmin
     volumes:
-      - ./addons:/bitnami/odoo/extra-addons
-      - ./etc:/opt/bitnami/odoo/conf
-    restart: always
-
-volumes:
-  odoo-db-data:
-  pgadmin-data:
-  odoo-addons:
-  odoo-config:
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+      # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
+      - ./addons:/mnt/extra-addons
+      - ./etc:/etc/odoo
+    restart: always             # run as a service
+    
