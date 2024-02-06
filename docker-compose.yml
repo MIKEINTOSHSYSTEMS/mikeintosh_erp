@@ -7,9 +7,9 @@ services:
       - POSTGRES_USER=merqconsultancy
       - POSTGRES_PASSWORD=merqhqadmin
       - POSTGRES_DB=postgres
-    restart: always             # run as a service
+    restart: always
     volumes:
-        - ./postgresql:/var/lib/postgresql/data
+      - ./postgresql:/var/lib/postgresql/data
 
   odoo17:
     image: odoo:17
@@ -26,10 +26,15 @@ services:
       - USER=merqconsultancy
       - PASSWORD=merqhqadmin
     volumes:
-      #- /etc/timezone:/etc/timezone:ro
-      #- /etc/localtime:/etc/localtime:ro
-      # - ./entrypoint.sh:/entrypoint.sh   # if you want to install additional Python packages, uncomment this line!
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
-    restart: always             # run as a service
-    
+    restart: always
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@merqconsultancy.com
+      - PGADMIN_DEFAULT_PASSWORD=merqhqadmin
+    ports:
+      - "5434:80" # adjust the port as needed
+    restart: always
