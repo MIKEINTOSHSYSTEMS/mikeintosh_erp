@@ -4,7 +4,7 @@ services:
     image: postgres:16
     user: root
     environment:
-      - POSTGRES_USER=merqconsultancy
+      - POSTGRES_USER=admin@merqconsultancy.org
       - POSTGRES_PASSWORD=merqhqadmin
       - POSTGRES_DB=postgres
     restart: always
@@ -25,8 +25,8 @@ services:
       - HOST=db
       - USER=admin@merqconsultancy.org
       - PASSWORD=merqhqadmin
-      - ODOO_ADMIN_USER=admin@merqconsultancy.org
-      - ODOO_ADMIN_PASSWORD=merqhqadmin
+      #- ODOO_ADMIN_USER=admin@merqconsultancy.org
+      #- ODOO_ADMIN_PASSWORD=merqhqadmin
     volumes:
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
