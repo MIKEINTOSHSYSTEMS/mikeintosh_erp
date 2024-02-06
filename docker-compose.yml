@@ -33,7 +33,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@merqconsultancy.com
+      - PGADMIN_DEFAULT_EMAIL=admin@merqconsultancy.org
       - PGADMIN_DEFAULT_PASSWORD=merqhqadmin
     ports:
       - "5434:80" # adjust the port as needed
