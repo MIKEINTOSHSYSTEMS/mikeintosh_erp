@@ -23,7 +23,7 @@ services:
     command: --
     environment:
       - HOST=db
-      - USER=merqconsultancy
+      - USER=admin@merqconsultancy.org
       - PASSWORD=merqhqadmin
     volumes:
       - ./addons:/mnt/extra-addons
