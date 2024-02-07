@@ -6,23 +6,12 @@ set -e
 # and pass them as arguments to the odoo process if not present in the config file
 : ${HOST:=${DB_PORT_5432_TCP_ADDR:='db'}}
 : ${PORT:=${DB_PORT_5432_TCP_PORT:=5432}}
-: ${USER:=${DB_ENV_POSTGRES_USER:=${POSTGRES_USER:='admin@merqconsultancy.org'}}}
-: ${PASSWORD:=${DB_ENV_POSTGRES_PASSWORD:=${POSTGRES_PASSWORD:='merqhqadmin'}}}
+: ${USER:=${DB_ENV_POSTGRES_USER:=${POSTGRES_USER:='odoo'}}}
+: ${PASSWORD:=${DB_ENV_POSTGRES_PASSWORD:=${POSTGRES_PASSWORD:='odoo17@2023'}}}
 
 # install python packages
 pip3 install pip --upgrade
 pip3 install -r /etc/odoo/requirements.txt
-
-# Add the default Odoo admin user and password
-ODOO_ADMIN_USER="admin@merqconsultancy.org"
-ODOO_ADMIN_PASSWORD="merqhqadmin"
-echo "Creating default Odoo admin user..."
-echo "from odoo import api, models
-User = models.execute_kw(db, uid, password, 'res.users', 'create', [{
-    'login': '${ODOO_ADMIN_USER}',
-    'name': 'Admin User',
-    'password': '${ODOO_ADMIN_PASSWORD}',
-}])" > /docker-entrypoint-init/create_default_admin_user.py
 
 # sed -i 's|raise werkzeug.exceptions.BadRequest(msg)|self.jsonrequest = {}|g' /usr/lib/python3/dist-packages/odoo/http.py
 

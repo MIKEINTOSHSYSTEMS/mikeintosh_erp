@@ -1,5 +1,7 @@
-postgresql/
-etc/odoo-server.log
-etc/addons/
-etc/sessions/
-etc/filestore/
+.docker
+.vscode
+node_modules/
+certs/
+conf.d/
+data/
+vhost.d/
