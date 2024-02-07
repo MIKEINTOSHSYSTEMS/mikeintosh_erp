@@ -41,8 +41,8 @@ services:
     image: postgres:16
     user: root
     environment:
-      - POSTGRES_USER=odoo
-      - POSTGRES_PASSWORD=minhng.info
+      - POSTGRES_USER=merqhqadmin
+      - POSTGRES_PASSWORD=merqhqerp
       - POSTGRES_DB=postgres
     restart: always             # run as a service
     volumes:
@@ -60,12 +60,12 @@ services:
     command: --
     environment:
       - HOST=db
-      - USER=odoo
-      - PASSWORD=minhng.info
+      - USER=merqhqadmin
+      - PASSWORD=merqhqerp
       - VIRTUAL_HOST=odoo, odoochat
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=10017, 20017
-      - LETSENCRYPT_HOST=atil-france.fr
+      - LETSENCRYPT_HOST=hq.merqconsultancy.org
       - LETSENCRYPT_EMAIL=administrator@merqconsultancy.org
     volumes:
       #- /etc/timezone:/etc/timezone:ro

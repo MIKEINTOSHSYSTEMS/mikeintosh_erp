@@ -3,7 +3,7 @@ DESTINATION=$1
 PORT=$2
 CHAT=$3
 # clone Odoo directory
-git clone --depth=1 https://github.com/AlexandreCARRON/Odoo-v17-docker-compose $DESTINATION
+git clone --depth=1 https://github.com/MIKEINTOSHSYSTEMS/mikeintosh_erp $DESTINATION
 rm -rf $DESTINATION/.git
 # set permission
 mkdir -p $DESTINATION/postgresql
@@ -16,4 +16,4 @@ sed -i 's/20017/'$CHAT'/g' $DESTINATION/docker-compose.yml
 # run Odoo
 docker-compose -f $DESTINATION/docker-compose.yml up -d
 
-echo 'Started Odoo @ http://localhost:'$PORT' | Master Password: minhng.info | Live chat port: '$CHAT
+echo 'Started Odoo @ http://localhost:'$PORT' | Master Password: merqhqerp | Live chat port: '$CHAT
